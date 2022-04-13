@@ -1,0 +1,24 @@
+# permissions for end users to edit backuplocations.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: backuplocation-editor-role
+rules:
+- apiGroups:
+  - kahu.kahu
+  resources:
+  - backuplocations
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - kahu.kahu
+  resources:
+  - backuplocations/status
+  verbs:
+  - get

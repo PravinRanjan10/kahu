@@ -1,0 +1,20 @@
+# permissions for end users to view backuplocations.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: backuplocation-viewer-role
+rules:
+- apiGroups:
+  - kahu.kahu
+  resources:
+  - backuplocations
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - kahu.kahu
+  resources:
+  - backuplocations/status
+  verbs:
+  - get
