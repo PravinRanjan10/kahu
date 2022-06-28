@@ -88,7 +88,8 @@ func NewBackupControllerCommand() *cobra.Command {
 				os.Exit(1)
 			}
 
-			config, err := utils.GetConfig(backupControllerFlags.KubeConfig)
+			// config, err := utils.GetConfig(backupControllerFlags.KubeConfig)
+			config, err := utils.GetConfig1()
 			if err != nil {
 				log.Errorf("failed to initialize kube config %s", err)
 				os.Exit(1)

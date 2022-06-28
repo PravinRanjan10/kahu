@@ -17,11 +17,15 @@ limitations under the License.
 package utils
 
 import (
+	"flag"
 	"fmt"
+	"path/filepath"
 
+	log "github.com/sirupsen/logrus"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	restclient "k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/util/homedir"
 )
 
 func GetConfig(kubeConfig string) (config *restclient.Config, err error) {
@@ -30,6 +34,23 @@ func GetConfig(kubeConfig string) (config *restclient.Config, err error) {
 	}
 
 	return restclient.InClusterConfig()
+}
+
+func GetConfig1() (*restclient.Config, error) {
+	var kubeconfig *string
+
+	if home := homedir.HomeDir(); home != "" {
+		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
+	} else {
+		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
+	}
+	flag.Parse()
+
+	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	if err != nil {
+		log.Errorf("Building config from flags failed, %s, trying to build inclusterconfig", err.Error())
+	}
+	return config, err
 }
 
 func NamespaceAndName(objMeta metav1.Object) string {

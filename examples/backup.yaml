@@ -1,0 +1,11 @@
+apiVersion: kahu.io/v1beta1
+kind: Backup
+metadata:
+   name: backup-demo-4
+spec:
+   includedResources: ["pod"]
+   includedNamespaces: ["default"]
+   excludedNamespaces: ["default"]
+   metadataLocation:
+      spec:
+         providerName: nfs-2
